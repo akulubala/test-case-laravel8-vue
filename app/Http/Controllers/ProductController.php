@@ -18,7 +18,7 @@ class ProductController extends Controller
     {
         $products = Product::latest()->paginate(10);
 
-        return Inertia::render('Post/Index', ['products' => $products]);
+        return Inertia::render('Product/Index', ['products' => $products]);
     }
 
     /**
@@ -28,7 +28,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Post/Create');
+        return Inertia::render('Product/Create');
     }
 
     /**
@@ -67,7 +67,7 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        return Inertia::render('Post/Edit', [
+        return Inertia::render('Product/Edit', [
             'post' => [
                 'id' => $product->id,
                 'title' => $product->title,
