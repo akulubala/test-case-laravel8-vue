@@ -74,7 +74,7 @@
                                 <label for="title">Qty</label>
                                 <input
                                     name="quantity"
-                                    type="text"
+                                    type="number"
                                     v-model="form.qty"
                                     class="
                                         w-full
