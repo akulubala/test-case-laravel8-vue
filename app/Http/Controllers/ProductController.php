@@ -6,6 +6,7 @@ use Inertia\Inertia;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use League\CommonMark\Inline\Element\Image;
 
 class ProductController extends Controller
 {
@@ -39,14 +40,23 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        Product::create(
-            $request->validate([
-                'title' => ['required', 'max:90'],
-                'description' => ['required'],
-            ])
-        );
+        $valid = $request->validate([
+            'title' => ['required', 'max:90'],
+            'price' => ['required', 'numeric'],
+            'qty' => ['required', 'numeric'],
+            'image' => ['required'],
+            'description' => ['required'],
+        ]);
+        if ($valid) {
+            $inputs = $request->only('title', 'price', 'qty', 'description');
 
-        return Redirect::route('product.index');
+            if ($request->hasFile('image')) {
+                $inputs['image'] = $request->file('image')->store('image', 'public');
+            }
+
+            Product::create($inputs);
+            return Redirect::route('product.index');
+        }
     }
 
     /**
@@ -71,7 +81,10 @@ class ProductController extends Controller
             'product' => [
                 'id' => $product->id,
                 'title' => $product->title,
-                'description' => $product->description
+                'description' => $product->description,
+                'price' => $product->price,
+                'qty' => $product->qty,
+                'image' => $product->image,
             ]
         ]);
     }
@@ -87,12 +100,22 @@ class ProductController extends Controller
     {
         $data = $request->validate([
             'title' => ['required', 'max:90'],
+            'price' => ['required', 'numeric'],
+            'qty' => ['required', 'numeric'],
             'description' => ['required'],
         ]);
-        $product->update($data);
-    
+        if ($data) {
+            $inputs = $request->only('title', 'price', 'qty', 'description');
 
+            if ($request->hasFile('image')) {
+                $inputs['image'] = $request->file('image')->store('image', 'public');
+            }
+            
+            $product->update($inputs);
+        }
+       
         return Redirect::route('product.index');
+
     }
 
     /**
@@ -104,7 +127,7 @@ class ProductController extends Controller
     public function destroy($product)
     {
         $product->delete();
-        
+
         return Redirect::route('product.index');
     }
 }

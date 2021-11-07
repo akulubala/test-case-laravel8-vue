@@ -32,6 +32,9 @@
                                 <td class="px-4 py-2">ID</td>
                                 <td class="px-4 py-2">Title</td>
                                 <td class="px-4 py-2">Description</td>
+                                <td class="px-4 py-2">Price</td>
+                                <td class="px-4 py-2">Qty</td>
+                                <td class="px-4 py-2">Image</td>
                                 <td class="px-4 py-2">Action</td>
                             </thead>
                             <tbody>
@@ -40,6 +43,18 @@
                                     <td class="px-4 py-2">{{ product.title }}</td>
                                     <td class="px-4 py-2">
                                         {{ product.description }}
+                                    </td>
+                                    <td class="px-4 py-2">
+                                        {{ product.price }}
+                                    </td>
+                                    <td class="px-4 py-2">
+                                        {{ product.qty }}
+                                    </td>
+                                    <td class="px-4 py-2">
+                                        <img
+                                            :src="showImage() + product.image"
+                                            class="object-cover h-40 w-80"
+                                        />
                                     </td>
                                     <td class="px-4 py-2 font-extrabold">
                                         <Link
@@ -57,7 +72,6 @@
                                 </tr>
                             </tbody>
                         </table>
-                        <pagination :links="products.links" />
                     </div>
                 </div>
             </div>
@@ -82,6 +96,9 @@ export default {
     methods: {
         destroy(id) {
             this.$inertia.delete(route("product.destroy", id));
+        },
+        showImage() {
+            return "/storage/";
         },
     },
 };

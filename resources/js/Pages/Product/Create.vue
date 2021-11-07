@@ -32,26 +32,6 @@
                                 />
                             </div>
                             <div class="mt-4">
-                                <label for="title">Description</label>
-                                <textarea
-                                    name="description"
-                                    type="text"
-                                    v-model="form.description"
-                                    class="
-                                        w-full
-                                        px-4
-                                        py-2
-                                        mt-2
-                                        border
-                                        rounded-md
-                                        focus:outline-none
-                                        focus:ring-1
-                                        focus:ring-blue-600
-                                    "
-                                >
-                                </textarea>
-                            </div>
-                            <div class="mt-4">
                                 <label for="title">Price</label>
                                 <input
                                     name="price"
@@ -89,6 +69,55 @@
                                     "
                                 >
                             </div>
+                            <div class="mt-4">
+                                <label for="title">Description</label>
+                                <textarea
+                                    name="description"
+                                    type="text"
+                                    v-model="form.description"
+                                    class="
+                                        w-full
+                                        px-4
+                                        py-2
+                                        mt-2
+                                        border
+                                        rounded-md
+                                        focus:outline-none
+                                        focus:ring-1
+                                        focus:ring-blue-600
+                                    "
+                                >
+                                </textarea>
+                            </div>
+                            <div>
+                                <label for="File">Image Upload</label>
+                                <input
+                                    type="file"
+                                    ref="photo"
+                                    class="
+                                        w-full
+                                        px-4
+                                        py-2
+                                        mt-2
+                                        border
+                                        rounded-md
+                                        focus:outline-none
+                                        focus:ring-1
+                                        focus:ring-blue-600
+                                    "
+                                />
+                                <img
+                                    v-if="url"
+                                    :src="url"
+                                    class="w-full mt-4 h-80"
+                                />
+                                <div
+                                    v-if="errors.image"
+                                    class="font-bold text-red-600"
+                                >
+                                    {{ errors.image }}
+                                </div>
+                            </div>
 
                             <!-- submit -->
                             <div class="flex items-center mt-4">
@@ -101,7 +130,7 @@
                                         rounded
                                     "
                                 >
-                                    Save
+                                    Savea
                                 </button>
                             </div>
                         </form>
@@ -121,18 +150,25 @@ export default {
         // BreezeAuthenticatedLayout,
         Head,
     },
+    props: {
+        errors: Object,
+    },
     setup() {
         const form = useForm({
             title: null,
             description: null,
             price: null,
-            qty: null
+            qty: null,
+            image: null,
         });
 
         return { form };
     },
     methods: {
         submit() {
+            if (this.$refs.photo) {
+                this.form.image = this.$refs.photo.files[0];
+            }
             this.form.post(route("product.store"));
         },
     },

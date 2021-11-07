@@ -51,6 +51,69 @@
                                 >
                                 </textarea>
                             </div>
+                            <div class="mt-4">
+                                <label for="title">Price</label>
+                                <input
+                                    name="price"
+                                    type="text"
+                                    v-model="form.price"
+                                    class="
+                                        w-full
+                                        px-4
+                                        py-2
+                                        mt-2
+                                        border
+                                        rounded-md
+                                        focus:outline-none
+                                        focus:ring-1
+                                        focus:ring-blue-600
+                                    "
+                                >
+                            </div>
+                            <div class="mt-4">
+                                <label for="title">Qty</label>
+                                <input
+                                    name="quantity"
+                                    type="text"
+                                    v-model="form.qty"
+                                    class="
+                                        w-full
+                                        px-4
+                                        py-2
+                                        mt-2
+                                        border
+                                        rounded-md
+                                        focus:outline-none
+                                        focus:ring-1
+                                        focus:ring-blue-600
+                                    "
+                                >
+                            </div>
+                            <div class="mt-4">
+                                <label for="title">Image</label>
+                                <img
+                                            :src="showImage() + product.image"
+                                            class="object-cover h-40 w-80"
+                                        />
+                            </div>
+                            <div>
+                                <label for="File">New Image</label>
+                                <input
+                                    type="file"
+                                    ref="photo"
+                                    class="
+                                        w-full
+                                        px-4
+                                        py-2
+                                        mt-2
+                                        border
+                                        rounded-md
+                                        focus:outline-none
+                                        focus:ring-1
+                                        focus:ring-blue-600
+                                    "
+                                />                                
+                            </div>
 
                             <!-- submit -->
                             <div class="flex items-center mt-4">
@@ -89,6 +152,8 @@ export default {
             description: props.product.description,
             price: props.product.price,
             qty: props.product.qty,
+            image: props.product.image,
+            _method: "put",
         });
 
         return { form };
@@ -98,7 +163,13 @@ export default {
     },
     methods: {
         submit() {
-            this.form.put(route("product.update", this.product.id));
+            if (this.$refs.photo) {
+                this.form.image = this.$refs.photo.files[0];
+            }
+            this.form.post(route("product.update", this.product.id));
+        },
+        showImage() {
+            return "/storage/";
         },
     },
 };
