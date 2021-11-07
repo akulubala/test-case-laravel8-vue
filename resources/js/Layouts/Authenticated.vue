@@ -18,6 +18,9 @@
                                 <BreezeNavLink :href="route('dashboard')" :active="route().current('dashboard')">
                                     Dashboard
                                 </BreezeNavLink>
+                                <BreezeNavLink :href="'/product'" :active="route().current('product')">
+                                    Product
+                                </BreezeNavLink>
                             </div>
                         </div>
 

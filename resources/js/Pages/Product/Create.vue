@@ -147,7 +147,7 @@ import { Head } from "@inertiajs/inertia-vue3";
 import { useForm } from "@inertiajs/inertia-vue3";
 export default {
     components: {
-        // BreezeAuthenticatedLayout,
+        BreezeAuthenticatedLayout,
         Head,
     },
     props: {
