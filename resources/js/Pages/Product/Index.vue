@@ -22,7 +22,7 @@
                                     bg-green-500
                                     rounded
                                 "
-                                :href="route('products.create')"
+                                :href="route('product.create')"
                             >
                                 Products Create
                             </Link>
@@ -44,7 +44,7 @@
                                     <td class="px-4 py-2 font-extrabold">
                                         <Link
                                             class="text-green-700"
-                                            :href="route('products.edit', product.id)"
+                                            :href="route('product.edit', product.id)"
                                         >
                                             Edit
                                         </Link>
@@ -72,7 +72,6 @@ import { Head } from "@inertiajs/inertia-vue3";
 import { Link } from "@inertiajs/inertia-vue3";
 export default {
     components: {
-        BreezeAuthenticatedLayout,
         Head,
         BreezeNavLink,
         Link,
@@ -82,7 +81,7 @@ export default {
     },
     methods: {
         destroy(id) {
-            this.$inertia.delete(route("products.destroy", id));
+            this.$inertia.delete(route("product.destroy", id));
         },
     },
 };

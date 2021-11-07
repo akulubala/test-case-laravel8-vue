@@ -46,7 +46,7 @@ class ProductController extends Controller
             ])
         );
 
-        return Redirect::route('products.index');
+        return Redirect::route('product.index');
     }
 
     /**
@@ -68,7 +68,7 @@ class ProductController extends Controller
     public function edit(Product $product)
     {
         return Inertia::render('Product/Edit', [
-            'post' => [
+            'product' => [
                 'id' => $product->id,
                 'title' => $product->title,
                 'description' => $product->description
@@ -92,7 +92,7 @@ class ProductController extends Controller
         $product->update($data);
     
 
-        return Redirect::route('products.index');
+        return Redirect::route('product.index');
     }
 
     /**
@@ -105,6 +105,6 @@ class ProductController extends Controller
     {
         $product->delete();
         
-        return Redirect::route('products.index');
+        return Redirect::route('product.index');
     }
 }
